@@ -3,6 +3,7 @@ package com.example.ProjectTogether.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "Room")
@@ -17,7 +18,12 @@ public class RoomModel {
     @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnoreProperties("roomModelList")
     private RoomTypeModel roomTypeModel;
-
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("rooms")
+    private HotelModel hotel;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "room", orphanRemoval = false)
+    @JsonIgnoreProperties("room")
+    private List<ReservationHotel> reservations;
 
     public Long getId() {
         return id;
@@ -49,5 +55,21 @@ public class RoomModel {
 
     public void setRoomTypeModel(RoomTypeModel roomTypeModel) {
         this.roomTypeModel = roomTypeModel;
+    }
+
+    public HotelModel getHotel() {
+        return hotel;
+    }
+
+    public void setHotel(HotelModel hotel) {
+        this.hotel = hotel;
+    }
+
+    public List<ReservationHotel> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<ReservationHotel> reservations) {
+        this.reservations = reservations;
     }
 }

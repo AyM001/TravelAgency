@@ -49,10 +49,6 @@ public class HotelController {
     updatedHotel.setName(hotel.getName());
     updatedHotel.setStars(hotel.getStars());
     updatedHotel.setDescription(hotel.getDescription());
-    updatedHotel.setCheckInDate(hotel.getCheckInDate());
-    updatedHotel.setCheckOutDate(hotel.getCheckOutDate());
-    updatedHotel.setCheckInTime(hotel.getCheckInTime());
-    updatedHotel.setCheckOutTime(hotel.getCheckOutTime());
     updatedHotel.setPaket(hotel.getPaket());
     hotelRepository.save(hotel);
   }

@@ -1,7 +1,10 @@
 package com.example.ProjectTogether.controller;
 
+import com.example.ProjectTogether.model.HotelModel;
+import com.example.ProjectTogether.model.ReservationHotel;
 import com.example.ProjectTogether.model.RoomModel;
 import com.example.ProjectTogether.repository.RoomRepository;
+import com.example.ProjectTogether.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +15,8 @@ import java.util.List;
 public class RoomController {
     @Autowired
     private RoomRepository roomRepository;
+    @Autowired
+    private ReservationService reservationService;
 
 
     @PostMapping("/room")
@@ -41,5 +46,9 @@ public class RoomController {
         roomUpdate.setDescription(roomModel.getDescription());
         roomUpdate.setRoomTypeModel(roomModel.getRoomTypeModel());
         roomRepository.save(roomModel);
+    }
+    @PostMapping("/reserve{id}")
+    public void reserve(@RequestBody ReservationHotel reservation,@PathVariable(name = "id") Long id) {
+        reservationService.reserve(reservation,id);
     }
 }

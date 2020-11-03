@@ -16,10 +16,6 @@ public class HotelModel {
   private String name;
   private int stars;
   private String description;
-  private Date checkInDate;
-  private Date checkOutDate;
-  private Time checkInTime;
-  private Time checkOutTime;
   private String paket;
 
   @ManyToOne(fetch = FetchType.EAGER)
@@ -29,7 +25,9 @@ public class HotelModel {
   @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL, mappedBy = "hotel")
   @JsonIgnoreProperties("hotel")
   private List<PhotoHotelModel> photos;
-
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "hotel", orphanRemoval = false)
+  @JsonIgnoreProperties("hotel")
+ private List<RoomModel> rooms;
   public HotelModel() {
   }
 
@@ -65,37 +63,6 @@ public class HotelModel {
     this.description = description;
   }
 
-  public Date getCheckInDate() {
-    return checkInDate;
-  }
-
-  public void setCheckInDate(Date checkInDate) {
-    this.checkInDate = checkInDate;
-  }
-
-  public Date getCheckOutDate() {
-    return checkOutDate;
-  }
-
-  public void setCheckOutDate(Date checkOutDate) {
-    this.checkOutDate = checkOutDate;
-  }
-
-  public Time getCheckInTime() {
-    return checkInTime;
-  }
-
-  public void setCheckInTime(Time checkInTime) {
-    this.checkInTime = checkInTime;
-  }
-
-  public Time getCheckOutTime() {
-    return checkOutTime;
-  }
-
-  public void setCheckOutTime(Time checkOutTime) {
-    this.checkOutTime = checkOutTime;
-  }
 
   public CityModel getCityModel() {
     return cityModel;
@@ -119,5 +86,13 @@ public class HotelModel {
 
   public void setPhotos(List<PhotoHotelModel> photos) {
     this.photos = photos;
+  }
+
+  public List<RoomModel> getRooms() {
+    return rooms;
+  }
+
+  public void setRooms(List<RoomModel> rooms) {
+    this.rooms = rooms;
   }
 }
