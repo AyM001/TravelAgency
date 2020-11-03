@@ -33,16 +33,24 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    @GetMapping("/getUsers/{id}")
+    @GetMapping("/getUserById/{id}")
     public UserModel getById(@PathVariable(name = "id") Long id) {
         return userRepository.findById(id).orElse(null);
+    }
+
+    @GetMapping("/getUserByUsername/{username}")
+    public UserModel getByUsername(@PathVariable(name = "username") String username) {
+        return userRepository.getUserModelByUsername(username).orElse(null);
     }
 
     @PutMapping("/updateUser")
     public void updateUser(@RequestBody UserModel userModel) {
         UserModel updatedUser = userRepository.findById(userModel.getId()).orElse(null);
         updatedUser.setUsername(userModel.getUsername());
-        updatedUser.setPassword(userModel.getPassword());
+        if(userModel.getNewPassword()!=null&&userModel.getNewPassword()!=""){
+            updatedUser.setPassword(userModel.getNewPassword());
+        }
+
         updatedUser.setUserRole(userModel.getUserRole());
         userRepository.save(updatedUser);
     }

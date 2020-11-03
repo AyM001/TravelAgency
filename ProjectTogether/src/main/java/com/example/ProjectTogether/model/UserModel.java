@@ -1,6 +1,8 @@
 package com.example.ProjectTogether.model;
 
 
+import com.example.ProjectTogether.common.utils.Hasher;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,6 +14,7 @@ public class UserModel {
     private Long id;
     private String username;
     private String password;
+    private String newPassword;
     private UserRole userRole;
 
     public Long getId() {
@@ -35,7 +38,15 @@ public class UserModel {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = Hasher.encode(password);
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
     }
 
     public UserRole getUserRole() {
