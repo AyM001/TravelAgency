@@ -12,6 +12,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,26 +34,37 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             // use the credentials
             // and authenticate against the third-party system
 
-            UserModel userModel = userRepository.getUserModelByUsername(username).orElse(null);
+          /*  UserModel userModel = userRepository.getUserModelByUsername(username).orElse(null);
             Set<SimpleGrantedAuthority> authorities = new HashSet<>();
             SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority("ROLE_" + userModel.getUserRole());
             authorities.add(simpleGrantedAuthority);
 
+            asta e de la Gabi pentru chestia cu roluri dar noi acum o facem diferit
+            am lasat-o ca poate ne trebuie pe undeva
+
+
+           */
             return new UsernamePasswordAuthenticationToken(
-                    username, password, authorities);
+                    username, password, new ArrayList<>());
         } else {
             return null;
         }
     }
-    private boolean shouldAuthenticateAgainstThirdPartySystem(String name, String password){
-       /* if (name == "admin" && password == "admin"){
+    private boolean shouldAuthenticateAgainstThirdPartySystem(String username, String password){
+       /*
+        if (username.equals("admin") && password.equals("admin")){
             return true;
         }
 
-        Security access with login admin admin
+        Access in aplicatie fara user in baza de date
+        username:admin
+        pass:admin
 
         */
-        UserModel user=userRepository.getUserModelByUsername(name).orElse(null);
+
+
+
+        UserModel user=userRepository.getUserModelByUsername(username).orElse(null);
         if(user!=null&&user.getPassword().equals(Hasher.encode(password))){
             return true;
         } else {
