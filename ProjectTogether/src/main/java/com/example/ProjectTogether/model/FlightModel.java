@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import java.sql.Time;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "Flights")
@@ -17,13 +18,16 @@ public class FlightModel {
   private Date departureDay;
   private Date returnDay;
   private Time departureHour;
-  private Time returnHour;
+  private Time arriveHour;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JsonIgnoreProperties("flightModels")
   private AirportModel airportModel;
   @OneToOne(mappedBy = "flightModel")
   private TripModel tripModel;
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "flight", orphanRemoval = false)
+  @JsonIgnoreProperties("flight")
+  private List<SeatModel> seats;
 
   public TripModel getTripModel() {
     return tripModel;
@@ -85,11 +89,11 @@ public class FlightModel {
   }
 
   public Time getReturnHour() {
-    return returnHour;
+    return arriveHour;
   }
 
-  public void setReturnHour(Time returnHour) {
-    this.returnHour = returnHour;
+  public void setReturnHour(Time arriveHour) {
+    this.arriveHour = arriveHour;
   }
 
   public AirportModel getAirportModel() {
@@ -98,5 +102,21 @@ public class FlightModel {
 
   public void setAirportModel(AirportModel airportModel) {
     this.airportModel = airportModel;
+  }
+
+  public Time getArriveHour() {
+    return arriveHour;
+  }
+
+  public void setArriveHour(Time arriveHour) {
+    this.arriveHour = arriveHour;
+  }
+
+  public List<SeatModel> getSeats() {
+    return seats;
+  }
+
+  public void setSeats(List<SeatModel> seats) {
+    this.seats = seats;
   }
 }
