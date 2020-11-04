@@ -19,6 +19,8 @@ public class FlightModel {
   private Date returnDay;
   private Time departureHour;
   private Time arriveHour;
+  private int rowsNumber;
+  private int seatsRowNumber;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JsonIgnoreProperties("flightModels")
@@ -118,5 +120,21 @@ public class FlightModel {
 
   public void setSeats(List<SeatModel> seats) {
     this.seats = seats;
+  }
+
+  public int getRowsNumber() {
+    return rowsNumber;
+  }
+
+  public void setRowsNumber(int rowsNumber) {
+    this.rowsNumber = rowsNumber;
+  }
+
+  public int getSeatsRowNumber() {
+    return seatsRowNumber;
+  }
+
+  public void setSeatsRowNumber(int seatsRowNumber) {
+    this.seatsRowNumber = seatsRowNumber;
   }
 }

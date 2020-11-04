@@ -18,10 +18,12 @@ public class RoomController {
     @Autowired
     private ReservationService reservationService;
 
+    // public void createRooms(long idRoomType, long idHotel, int numRooms)
 
-    @PostMapping("/room")
-    public void addRoom(@RequestBody RoomModel model) {
-        roomRepository.save(model);
+
+    @PostMapping("/room/{idRoomType}/{idHotel}/{numRooms}")
+    public void addRoom(@PathVariable(name = "idRoomType") Long idRoomType,@PathVariable(name = "idHotel") Long idHotel,@PathVariable(name = "numRooms") int numRooms){
+        reservationService.createRooms(idRoomType, idHotel, numRooms);
     }
 
     @DeleteMapping("/room/{id}")
@@ -38,15 +40,7 @@ public class RoomController {
     public RoomModel getRoomById(@PathVariable(name = "id") Long id) {
         return roomRepository.findById(id).orElse(null);
     }
-
-    @PutMapping("/room")
-    public void UpdateRoom(@RequestBody RoomModel roomModel) {
-        RoomModel roomUpdate = roomRepository.findById(roomModel.getId()).orElse(null);
-        roomUpdate.setNumber(roomModel.getNumber());
-        roomUpdate.setDescription(roomModel.getDescription());
-        roomUpdate.setRoomTypeModel(roomModel.getRoomTypeModel());
-        roomRepository.save(roomModel);
-    }
+    
     @PostMapping("/reserve{id}")
     public void reserve(@RequestBody ReservationHotel reservation,@PathVariable(name = "id") Long id) {
         reservationService.reserve(reservation,id);

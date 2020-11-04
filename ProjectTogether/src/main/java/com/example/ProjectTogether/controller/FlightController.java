@@ -3,7 +3,10 @@ package com.example.ProjectTogether.controller;
 
 import com.example.ProjectTogether.model.FlightModel;
 import com.example.ProjectTogether.model.ParticipantModel;
+import com.example.ProjectTogether.model.ReservationFlight;
 import com.example.ProjectTogether.repository.FlightRepository;
+import com.example.ProjectTogether.service.FlightService;
+import com.example.ProjectTogether.service.ReservationFlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,10 +17,14 @@ import java.util.List;
 public class FlightController {
     @Autowired
     private FlightRepository flightRepository;
+    @Autowired
+    private FlightService flightService;
+    @Autowired
+    private ReservationFlightService reservationFlightService;
 
     @PostMapping("/flights")
     public void addFlight(@RequestBody FlightModel flightModel){
-        flightRepository.save(flightModel);
+        flightService.createFlight(flightModel);
     }
 
     @GetMapping("/flights")
@@ -28,6 +35,10 @@ public class FlightController {
     @GetMapping("/flights/{id}")
     public FlightModel getById(@PathVariable(name = "id") Long idFlight) {
         return flightRepository.findById(idFlight).orElse(null);
+    }
+    @PutMapping("/flights/{id}/{numPers}")  //numPers persoanele care vor sa rezerve bilete la zborul respectiv
+    public void saveReservation(@RequestBody ReservationFlight reservation,@PathVariable(name = "id") Long idFlight,@PathVariable(name = "numPers") int numPers){
+        reservationFlightService.saveReservation(reservation,idFlight,numPers);
     }
 
     @PutMapping("/flights")

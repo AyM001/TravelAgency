@@ -16,20 +16,21 @@ public class FlightService {
     @Autowired
     private SeatRepository seatRepository;
 
-    public void createSeats(long id, int seatsNumber, int rows){
-        Optional<FlightModel> flightModelOptional = flightRepository.findById(id);
-        if (flightModelOptional.isPresent()){
-            FlightModel flight = flightModelOptional.get();
-            for (int r = 1; r==rows ; r++){
-                for (int s = 1; s==seatsNumber;s++){
+    public void createFlight(FlightModel flight){
+        flight.setVacancies(flight.getRowsNumber()*flight.getSeatsRowNumber());
+        flightRepository.save(flight);
+            for (int r = 1; r<=flight.getRowsNumber() ; r++){
+
+                for (int s = 1; s<=flight.getSeatsRowNumber();s++){
                     String seatName = createSeatName(s)+r;
                     SeatModel seat = new SeatModel();
                     seat.setSeatName(seatName);
-                    flight.getSeats().add(seat);
+                    seat.setFlight(flight);
+                    seatRepository.save(seat);
                 }
             }
-            flightRepository.save(flight);
-        }
+
+
     }
 
     private String createSeatName(int rowNumber){

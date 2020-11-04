@@ -3,9 +3,11 @@ package com.example.ProjectTogether.service;
 import com.example.ProjectTogether.model.HotelModel;
 import com.example.ProjectTogether.model.ReservationHotel;
 import com.example.ProjectTogether.model.RoomModel;
+import com.example.ProjectTogether.model.RoomTypeModel;
 import com.example.ProjectTogether.repository.HotelRepository;
 import com.example.ProjectTogether.repository.ReservationHotelRepository;
 import com.example.ProjectTogether.repository.RoomRepository;
+import com.example.ProjectTogether.repository.RoomTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,8 @@ public class ReservationService {
     private RoomRepository roomRepository;
     @Autowired
     private ReservationHotelRepository reservationHotelRepository;
+    @Autowired
+    private RoomTypeRepository roomTypeRepository;
 
     private boolean ifIsReserved(ReservationHotel rezOld, ReservationHotel rezNew){
         if (rezOld.getCheckInDate().equals(rezNew.getCheckInDate()) ||
@@ -51,6 +55,20 @@ public class ReservationService {
                         }
                     }
                 }
+            }
+        }
+    }
+    public void createRooms(long idRoomType, long idHotel, int numRooms){
+        RoomModel room = new RoomModel();
+        Optional<HotelModel> hotelModelOptional = hotelRepository.findById(idHotel);
+        Optional<RoomTypeModel> roomTypeModelOptional = roomTypeRepository.findById(idRoomType);
+        if (hotelModelOptional.isPresent() && roomTypeModelOptional.isPresent()){
+            HotelModel hotel = hotelModelOptional.get();
+            RoomTypeModel roomType = roomTypeModelOptional.get();
+            for (int r = 1; r <= numRooms; r++){
+                room.setHotel(hotel);
+                room.setRoomTypeModel(roomType);
+                roomRepository.save(room);
             }
         }
     }
