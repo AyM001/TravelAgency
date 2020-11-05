@@ -23,8 +23,12 @@ public class FlightModel {
   private int seatsRowNumber;
 
   @ManyToOne(fetch = FetchType.EAGER)
-  @JsonIgnoreProperties("flightModels")
-  private AirportModel airportModel;
+  @JsonIgnoreProperties("flightDepartures")
+  private AirportModel airportDeparture;
+
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JsonIgnoreProperties("flightArrival")
+  private AirportModel airportArrival;
   @OneToOne(mappedBy = "flightModel")
   private TripModel tripModel;
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "flight", orphanRemoval = false)
@@ -98,12 +102,20 @@ public class FlightModel {
     this.arriveHour = arriveHour;
   }
 
-  public AirportModel getAirportModel() {
-    return airportModel;
+  public AirportModel getAirportDeparture() {
+    return airportDeparture;
   }
 
-  public void setAirportModel(AirportModel airportModel) {
-    this.airportModel = airportModel;
+  public void setAirportDeparture(AirportModel airportDeparture) {
+    this.airportDeparture = airportDeparture;
+  }
+
+  public AirportModel getAirportArrival() {
+    return airportArrival;
+  }
+
+  public void setAirportArrival(AirportModel airportArrival) {
+    this.airportArrival = airportArrival;
   }
 
   public Time getArriveHour() {

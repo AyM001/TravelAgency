@@ -18,11 +18,13 @@ public class AirportModel {
   private CityModel cityModel;
 
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "airportModel", orphanRemoval = false)
-  @JsonIgnoreProperties("airportModel")
-  private List<FlightModel> flightModels;
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "airportDeparture", orphanRemoval = false)
+  @JsonIgnoreProperties("airportDeparture")
+  private List<FlightModel> flightDepartures;
 
-
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "airportArrival", orphanRemoval = false)
+  @JsonIgnoreProperties("airportArrival")
+  private List<FlightModel> flightArrival;
   public AirportModel() {
   }
 
@@ -50,11 +52,19 @@ public class AirportModel {
     this.cityModel = cityModel;
   }
 
-  public List<FlightModel> getFlightModels() {
-    return flightModels;
+  public List<FlightModel> getFlightDepartures() {
+    return flightDepartures;
   }
 
-  public void setFlightModels(List<FlightModel> flightModels) {
-    this.flightModels = flightModels;
+  public void setFlightDepartures(List<FlightModel> flightDepartures) {
+    this.flightDepartures = flightDepartures;
+  }
+
+  public List<FlightModel> getFlightArrival() {
+    return flightArrival;
+  }
+
+  public void setFlightArrival(List<FlightModel> flightArrival) {
+    this.flightArrival = flightArrival;
   }
 }

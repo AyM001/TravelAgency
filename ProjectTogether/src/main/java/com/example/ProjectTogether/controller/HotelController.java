@@ -1,6 +1,7 @@
 package com.example.ProjectTogether.controller;
 
 
+import com.example.ProjectTogether.model.CityModel;
 import com.example.ProjectTogether.model.CountryModel;
 import com.example.ProjectTogether.model.HotelModel;
 import com.example.ProjectTogether.model.files.ResponseFile;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +26,22 @@ public class HotelController {
   private PhotoHotelStorageService photoHotelStorageService;
   @GetMapping("/hotels")
   public List<HotelModel> getHotels() {
-    return hotelRepository.findAll();
+    List<HotelModel> hotelModels = new ArrayList<>();
+    for (HotelModel hotelModel: hotelRepository.findAll()){
+      HotelModel hotel = new HotelModel();
+      hotel.setId(hotelModel.getId());
+      hotel.setName(hotelModel.getName());
+      hotel.setDescription(hotel.getDescription());
+      hotel.setPaket(hotelModel.getPaket());
+      CityModel cityModel = new CityModel();
+      cityModel.setName(hotelModel.getCityModel().getName());
+      hotel.setCityModel(cityModel);
+      hotelModels.add(hotel);
+
+    }
+
+
+    return hotelModels;
   }
 
   @GetMapping("/hotels/{id}")

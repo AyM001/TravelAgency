@@ -1,15 +1,14 @@
 package com.example.ProjectTogether.controller;
 
 
-import com.example.ProjectTogether.model.FlightModel;
-import com.example.ProjectTogether.model.ParticipantModel;
-import com.example.ProjectTogether.model.ReservationFlight;
+import com.example.ProjectTogether.model.*;
 import com.example.ProjectTogether.repository.FlightRepository;
 import com.example.ProjectTogether.service.FlightService;
 import com.example.ProjectTogether.service.ReservationFlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,7 +28,28 @@ public class FlightController {
 
     @GetMapping("/flights")
     public List<FlightModel> getFlights(){
-        return flightRepository.findAll();
+        List<FlightModel> flightModels = new ArrayList<>();
+        for (FlightModel flightModel: flightRepository.findAll() ){
+            FlightModel flight = new FlightModel();
+            flight.setId(flightModel.getId());
+            flight.setName(flightModel.getName());
+            flight.setVacancies(flightModel.getVacancies());
+            AirportModel airportDep = new AirportModel();
+            airportDep.setName(flightModel.getAirportDeparture().getName());
+            CityModel cityModel1 = new CityModel();
+            cityModel1.setName(flightModel.getAirportDeparture().getCityModel().getName());
+            airportDep.setCityModel(cityModel1);
+            AirportModel airportArr = new AirportModel();
+            CityModel cityModel2 = new CityModel();
+            cityModel2.setName(flightModel.getAirportArrival().getCityModel().getName());
+            airportArr.setName(flightModel.getAirportArrival().getName());
+            airportArr.setCityModel(cityModel2);
+            flight.setAirportDeparture(airportDep);
+            flight.setAirportArrival(airportArr);
+            flightModels.add(flight);
+        }
+
+        return flightModels;
     }
 
     @GetMapping("/flights/{id}")
@@ -50,7 +70,8 @@ public class FlightController {
         updatedFlight.setDepartureHour(flightModel.getDepartureHour());
         updatedFlight.setReturnDay(flightModel.getReturnDay());
         updatedFlight.setReturnHour(flightModel.getReturnHour());
-        updatedFlight.setAirportModel(flightModel.getAirportModel());
+        updatedFlight.setAirportArrival(flightModel.getAirportArrival());
+        updatedFlight.setAirportDeparture(flightModel.getAirportDeparture());
         flightRepository.save(updatedFlight);
     }
 
