@@ -40,7 +40,7 @@ public class RoomController {
     public RoomModel getRoomById(@PathVariable(name = "id") Long id) {
         return roomRepository.findById(id).orElse(null);
     }
-    
+
     @PostMapping("/reserve{id}")
     public void reserve(@RequestBody ReservationHotel reservation,@PathVariable(name = "id") Long id) {
         reservationService.reserve(reservation,id);
