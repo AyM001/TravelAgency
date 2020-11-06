@@ -31,9 +31,9 @@ public class RoomController {
         roomRepository.deleteById(id);
     }
 
-    @GetMapping("/room")
-    public List<RoomModel> getRooms() {
-        return roomRepository.findAll();
+    @GetMapping("/rooms/{id}")
+    public List<RoomModel> getRooms(@PathVariable(name = "id") Long id) {
+        return reservationService.roomModels(id);
     }
 
     @GetMapping("/room/{id}")
@@ -41,7 +41,7 @@ public class RoomController {
         return roomRepository.findById(id).orElse(null);
     }
 
-    @PostMapping("/reserve{id}")
+    @PostMapping("/reserve/{id}")
     public void reserve(@RequestBody ReservationHotel reservation,@PathVariable(name = "id") Long id) {
         reservationService.reserve(reservation,id);
     }

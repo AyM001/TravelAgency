@@ -11,6 +11,10 @@ import com.example.ProjectTogether.repository.RoomTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.IllegalFormatCodePointException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -50,8 +54,13 @@ public class ReservationService {
                 if (verifyPlaces(room,reservation)){
                     for (ReservationHotel reservationH: room.getReservations()){
                         if (!ifIsReserved(reservationH,reservation)){
+                            Time startTime = java.sql.Time.valueOf("14:00:00");                       // 23:32:45
+                            Time endTime =  java.sql.Time.valueOf("12:00:00");
+                            reservation.setCheckInTime(startTime);
+                            reservation.setCheckOutTime(endTime);
                             room.getReservations().add(reservation);
                             roomRepository.save(room);
+                            break;
                         }
                     }
                 }
@@ -59,17 +68,68 @@ public class ReservationService {
         }
     }
     public void createRooms(long idRoomType, long idHotel, int numRooms){
-        RoomModel room = new RoomModel();
+
         Optional<HotelModel> hotelModelOptional = hotelRepository.findById(idHotel);
         Optional<RoomTypeModel> roomTypeModelOptional = roomTypeRepository.findById(idRoomType);
         if (hotelModelOptional.isPresent() && roomTypeModelOptional.isPresent()){
             HotelModel hotel = hotelModelOptional.get();
             RoomTypeModel roomType = roomTypeModelOptional.get();
             for (int r = 1; r <= numRooms; r++){
-                room.setHotel(hotel);
+                RoomModel room = new RoomModel();
+                System.out.println(numRooms);
                 room.setRoomTypeModel(roomType);
+                room.setHotel(hotel);
                 roomRepository.save(room);
             }
+
         }
+    }
+
+    public List<RoomModel> roomModels(long id){
+        Optional<HotelModel> hotelModelOptional = hotelRepository.findById(id);
+        HotelModel hotelModel = new HotelModel();
+        List<RoomModel> roomModels = new ArrayList<>();
+        if (hotelModelOptional.isPresent()){
+            HotelModel  hotel = hotelModelOptional.get();
+
+            hotelModel.setId(hotel.getId());
+            hotelModel.setName(hotel.getName());
+            for (RoomModel roomModel: hotel.getRooms()){
+                RoomModel room = new RoomModel();
+                room.setId(roomModel.getId());
+                room.setReservations(roomModel.getReservations());
+                RoomTypeModel roomTypeModel = new RoomTypeModel();
+                roomTypeModel.setDescription(roomModel.getRoomTypeModel().getDescription());
+                roomTypeModel.setId(roomModel.getRoomTypeModel().getId());
+                roomTypeModel.setHasbalcony(roomModel.getRoomTypeModel().isHasbalcony());
+                roomTypeModel.setName(roomModel.getRoomTypeModel().getName());
+                roomTypeModel.setPlaces(roomModel.getRoomTypeModel().getPlaces());
+                room.setRoomTypeModel(roomTypeModel);
+                roomModels.add(room);
+
+            }
+        }
+        return roomModels;
+    }
+
+    public Integer returnHotelVacancies(long hotelId, ReservationHotel reservationHotel){
+        List<Integer> integerList = new ArrayList<>();
+        Optional<HotelModel> hotelModelOptional = hotelRepository.findById(hotelId);
+        if (hotelModelOptional.isPresent()){
+            HotelModel hotelModel = hotelModelOptional.get();
+            for (RoomModel roomModel: hotelModel.getRooms()){
+                if (roomModel.getReservations().size()==0){
+                    integerList.add(1);
+                }else{
+                    for (ReservationHotel resOld: roomModel.getReservations()){
+                        if (ifIsReserved(resOld,reservationHotel)){
+                            integerList.add(1);
+                        }
+                    }
+                }
+
+            }
+        }
+        return integerList.size();
     }
 }

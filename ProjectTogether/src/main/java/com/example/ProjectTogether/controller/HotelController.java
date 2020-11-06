@@ -4,9 +4,12 @@ package com.example.ProjectTogether.controller;
 import com.example.ProjectTogether.model.CityModel;
 import com.example.ProjectTogether.model.CountryModel;
 import com.example.ProjectTogether.model.HotelModel;
+import com.example.ProjectTogether.model.ReservationHotel;
 import com.example.ProjectTogether.model.files.ResponseFile;
 import com.example.ProjectTogether.repository.HotelRepository;
+import com.example.ProjectTogether.repository.ReservationHotelRepository;
 import com.example.ProjectTogether.service.PhotoHotelStorageService;
+import com.example.ProjectTogether.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,15 +18,21 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
 public class HotelController {
   @Autowired
+  private ReservationHotelRepository reservationHotelRepository;
+  @Autowired
   private HotelRepository hotelRepository;
   @Autowired
   private PhotoHotelStorageService photoHotelStorageService;
+
+  @Autowired
+  private ReservationService reservationService;
   @GetMapping("/hotels")
   public List<HotelModel> getHotels() {
     List<HotelModel> hotelModels = new ArrayList<>();
@@ -86,4 +95,25 @@ public class HotelController {
     }).collect(Collectors.toList());
     return ResponseEntity.status(HttpStatus.OK).body(files);
   }
+
+  @GetMapping("/hotels/vacancies/{idH}")
+  public Integer getHotel(@PathVariable(name = "idH") Long idH,@RequestBody ReservationHotel reservationHotel ) {
+    return reservationService.returnHotelVacancies(idH,reservationHotel);
+  }
+
+  @GetMapping("/reservation")
+  public List<ReservationHotel> deTest(){
+    List<ReservationHotel> reservationHotels = new ArrayList<>();
+    for (ReservationHotel reservation: reservationHotelRepository.findAll()){
+      ReservationHotel reservationHotel = new ReservationHotel();
+      reservationHotel.setId(reservation.getId());
+      reservationHotel.setCheckInDate(reservation.getCheckInDate());
+      reservationHotel.setCheckInTime(reservation.getCheckInTime());
+      reservationHotel.setCheckOutDate(reservation.getCheckOutDate());
+      reservationHotel.setCheckOutTime(reservation.getCheckOutTime());
+      reservationHotels.add(reservationHotel);
+    }
+    return reservationHotels;
+  }
+
  }
