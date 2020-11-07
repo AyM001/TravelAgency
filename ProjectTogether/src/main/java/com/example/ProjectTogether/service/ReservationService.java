@@ -28,15 +28,26 @@ public class ReservationService {
     @Autowired
     private RoomTypeRepository roomTypeRepository;
 
-    private boolean ifIsReserved(ReservationHotel rezOld, ReservationHotel rezNew){
-        if (rezOld.getCheckInDate().equals(rezNew.getCheckInDate()) ||
-                (rezOld.getCheckInDate().before(rezNew.getCheckInDate()) && rezOld.getCheckOutDate().after(rezNew.getCheckInDate())) ||
-                (rezOld.getCheckInDate().after(rezNew.getCheckOutDate())&& rezOld.getCheckInDate().before(rezOld.getCheckOutDate()) ) ||
-                (rezOld.getCheckInDate().after(rezNew.getCheckInDate())) && (rezOld.getCheckInDate().before(rezNew.getCheckOutDate()))){
-            return false;
+    private boolean ifIsReserved(RoomModel room, ReservationHotel rezNew){
+        for (ReservationHotel rezOld: room.getReservations()){
+            if (verifyRoomReservation(rezOld,rezNew)){
+                return true;
+
+            }
 
         }
-        return true;
+
+        return false;
+    }
+    private boolean verifyRoomReservation(ReservationHotel rezOld, ReservationHotel rezNew){
+        if (rezNew.getCheckInDate().toLocalDate().equals(rezOld.getCheckInDate().toLocalDate())){
+            return true;
+        }else if (rezNew.getCheckInDate().toLocalDate().isBefore(rezOld.getCheckInDate().toLocalDate()) && rezNew.getCheckOutDate().toLocalDate().isAfter(rezOld.getCheckInDate().toLocalDate())){
+            return true;
+        }else if (rezNew.getCheckInDate().toLocalDate().isAfter(rezOld.getCheckInDate().toLocalDate()) && rezNew.getCheckInDate().toLocalDate().isBefore(rezOld.getCheckOutDate().toLocalDate())){
+            return true;
+        }
+        return false;
     }
 
     private boolean verifyPlaces(RoomModel room, ReservationHotel reservation){
@@ -53,7 +64,6 @@ public class ReservationService {
             for (RoomModel room: hotel.getRooms()){
                 if (verifyPlaces(room,reservation)){
                     if (room.getReservations().size()==0) {
-                        System.out.println("test2");
                         Time startTime = java.sql.Time.valueOf("14:00:00");                       // 23:32:45
                         Time endTime = java.sql.Time.valueOf("12:00:00");
                         reservation.setCheckInTime(startTime);
@@ -62,25 +72,23 @@ public class ReservationService {
                         reservationHotelRepository.save(reservation);
                         break;
 
-                        }else if (room.getReservations().size()>0){
-                        System.out.println("test1");
-                        for (ReservationHotel reservationH : room.getReservations()) {
-                            if (ifIsReserved(reservationH, reservation)) {
-                                Time startTime = java.sql.Time.valueOf("14:00:00");                       // 23:32:45
-                                Time endTime = java.sql.Time.valueOf("12:00:00");
-                                reservation.setCheckInTime(startTime);
-                                reservation.setCheckOutTime(endTime);
-                                reservation.setRoom(room);
-                                reservationHotelRepository.save(reservation);
-                                break;
-                            }
+                    }
+                    if (!ifIsReserved(room, reservation) && (room.getReservations().size()>0)) {
+                        Time startTime = java.sql.Time.valueOf("14:00:00");
+                        Time endTime = java.sql.Time.valueOf("12:00:00");
+                        reservation.setCheckInTime(startTime);
+                        reservation.setCheckOutTime(endTime);
+                        reservation.setRoom(room);
+                        reservationHotelRepository.save(reservation);
+                        break;
                     }
 
-                    }
+
                 }
             }
         }
     }
+
     public void createRooms(long idRoomType, long idHotel, int numRooms){
 
         Optional<HotelModel> hotelModelOptional = hotelRepository.findById(idHotel);
@@ -135,11 +143,11 @@ public class ReservationService {
                 if (roomModel.getReservations().size()==0){
                     integerList.add(1);
                 }else{
-                    for (ReservationHotel resOld: roomModel.getReservations()){
-                        if (ifIsReserved(resOld,reservationHotel)){
-                            integerList.add(1);
-                        }
+
+                    if (ifIsReserved(roomModel,reservationHotel)){
+                        integerList.add(1);
                     }
+
                 }
 
             }
