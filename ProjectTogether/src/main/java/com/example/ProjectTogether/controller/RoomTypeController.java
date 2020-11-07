@@ -5,6 +5,7 @@ import com.example.ProjectTogether.repository.RoomTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -25,7 +26,18 @@ public class RoomTypeController {
 
     @GetMapping("/roomType")
     public List<RoomTypeModel> getRoomType() {
-        return roomTypeRepository.findAll();
+        List<RoomTypeModel> roomTypeModels = new ArrayList<>();
+        for (RoomTypeModel roomType: roomTypeRepository.findAll()){
+            RoomTypeModel roomTypeModel = new RoomTypeModel();
+            roomTypeModel.setId(roomType.getId());
+            roomTypeModel.setName(roomType.getName());
+            roomTypeModel.setPlaces(roomType.getPlaces());
+            roomTypeModel.setHasbalcony(roomType.isHasbalcony());
+            roomTypeModel.setDescription(roomType.getDescription());
+            roomTypeModels.add(roomTypeModel);
+
+        }
+        return roomTypeModels;
     }
 
     @GetMapping("/roomType/{id}")

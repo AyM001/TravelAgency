@@ -31,7 +31,8 @@ public class ReservationService {
     private boolean ifIsReserved(ReservationHotel rezOld, ReservationHotel rezNew){
         if (rezOld.getCheckInDate().equals(rezNew.getCheckInDate()) ||
                 (rezOld.getCheckInDate().before(rezNew.getCheckInDate()) && rezOld.getCheckOutDate().after(rezNew.getCheckInDate())) ||
-                (rezOld.getCheckInDate().after(rezNew.getCheckOutTime())&& rezOld.getCheckInDate().before(rezOld.getCheckOutDate()) )){
+                (rezOld.getCheckInDate().after(rezNew.getCheckOutDate())&& rezOld.getCheckInDate().before(rezOld.getCheckOutDate()) ) ||
+                (rezOld.getCheckInDate().after(rezNew.getCheckInDate())) && (rezOld.getCheckInDate().before(rezNew.getCheckOutDate()))){
             return false;
 
         }
@@ -39,7 +40,7 @@ public class ReservationService {
     }
 
     private boolean verifyPlaces(RoomModel room, ReservationHotel reservation){
-        if (room.getRoomTypeModel().getPlaces() > reservation.getPersonsNumber()){
+        if (room.getRoomTypeModel().getPlaces() >= reservation.getPersonsNumber()){
             return true;
         }
         return false;
@@ -49,19 +50,32 @@ public class ReservationService {
         Optional<HotelModel> hotelModelOptional = hotelRepository.findById(id);
         if (hotelModelOptional.isPresent()){
             HotelModel hotel = hotelModelOptional.get();
-
             for (RoomModel room: hotel.getRooms()){
                 if (verifyPlaces(room,reservation)){
-                    for (ReservationHotel reservationH: room.getReservations()){
-                        if (!ifIsReserved(reservationH,reservation)){
-                            Time startTime = java.sql.Time.valueOf("14:00:00");                       // 23:32:45
-                            Time endTime =  java.sql.Time.valueOf("12:00:00");
-                            reservation.setCheckInTime(startTime);
-                            reservation.setCheckOutTime(endTime);
-                            room.getReservations().add(reservation);
-                            roomRepository.save(room);
-                            break;
-                        }
+                    if (room.getReservations().size()==0) {
+                        System.out.println("test2");
+                        Time startTime = java.sql.Time.valueOf("14:00:00");                       // 23:32:45
+                        Time endTime = java.sql.Time.valueOf("12:00:00");
+                        reservation.setCheckInTime(startTime);
+                        reservation.setCheckOutTime(endTime);
+                        reservation.setRoom(room);
+                        reservationHotelRepository.save(reservation);
+                        break;
+
+                        }else if (room.getReservations().size()>0){
+                        System.out.println("test1");
+                        for (ReservationHotel reservationH : room.getReservations()) {
+                            if (ifIsReserved(reservationH, reservation)) {
+                                Time startTime = java.sql.Time.valueOf("14:00:00");                       // 23:32:45
+                                Time endTime = java.sql.Time.valueOf("12:00:00");
+                                reservation.setCheckInTime(startTime);
+                                reservation.setCheckOutTime(endTime);
+                                reservation.setRoom(room);
+                                reservationHotelRepository.save(reservation);
+                                break;
+                            }
+                    }
+
                     }
                 }
             }

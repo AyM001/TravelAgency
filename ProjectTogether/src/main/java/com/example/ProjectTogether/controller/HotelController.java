@@ -55,7 +55,20 @@ public class HotelController {
 
   @GetMapping("/hotels/{id}")
   public HotelModel getHotel(@PathVariable(name = "id") Long id) {
-    return hotelRepository.findById(id).orElse(null);
+    Optional<HotelModel> hotelModelOptional = hotelRepository.findById(id);
+    HotelModel hotel = new HotelModel();
+    if (hotelModelOptional.isPresent()){
+      HotelModel hotelModel = hotelModelOptional.get();
+      hotel.setId(hotelModel.getId());
+      hotel.setName(hotelModel.getName());
+      hotel.setDescription(hotel.getDescription());
+      hotel.setPaket(hotelModel.getPaket());
+      CityModel cityModel = new CityModel();
+      cityModel.setName(hotelModel.getCityModel().getName());
+      hotel.setCityModel(cityModel);
+    }
+
+    return hotel;
   }
 
 

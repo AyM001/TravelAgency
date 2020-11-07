@@ -43,6 +43,7 @@ public class RoomController {
 
     @PostMapping("/reserve/{id}")
     public void reserve(@RequestBody ReservationHotel reservation,@PathVariable(name = "id") Long id) {
+        System.out.println(id);
         reservationService.reserve(reservation,id);
     }
 }
