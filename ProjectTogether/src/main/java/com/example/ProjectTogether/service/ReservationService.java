@@ -60,7 +60,30 @@ public class ReservationService {
     public void reserve(ReservationHotel reservation, long id){
         Optional<HotelModel> hotelModelOptional = hotelRepository.findById(id);
         if (hotelModelOptional.isPresent()){
-            HotelModel hotel = hotelModelOptional.get();
+            HotelModel hotelModel = hotelModelOptional.get();
+            HotelModel hotel = new HotelModel();
+            hotel.setId(hotelModel.getId());
+            List<RoomModel> roomModels = new ArrayList<>();
+            for (RoomModel roomModel: hotelModel.getRooms() ){
+                RoomModel roomModel1 = new RoomModel();
+                roomModel1.setId(roomModel.getId());
+                RoomTypeModel roomTypeModel = new RoomTypeModel();
+                roomTypeModel.setId(roomModel.getRoomTypeModel().getId());
+                roomTypeModel.setPlaces(roomModel.getRoomTypeModel().getPlaces());
+                roomModel1.setRoomTypeModel(roomTypeModel);
+                List<ReservationHotel> reservationHotels = new ArrayList<>();
+                for (ReservationHotel res: roomModel.getReservations()){
+                    ReservationHotel reser = new ReservationHotel();
+                    reser.setId(res.getId());
+                    reser.setPersonsNumber(res.getPersonsNumber());
+                    reser.setCheckInDate(res.getCheckInDate());
+                    reser.setCheckOutDate(res.getCheckOutDate());
+                    reservationHotels.add(reser);
+                }
+                roomModel1.setReservations(reservationHotels);
+                roomModels.add(roomModel1);
+            }
+            hotel.setRooms(roomModels);
             for (RoomModel room: hotel.getRooms()){
                 if (verifyPlaces(room,reservation)){
                     if (room.getReservations().size()==0) {
