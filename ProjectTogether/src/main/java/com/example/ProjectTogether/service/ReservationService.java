@@ -167,7 +167,7 @@ public class ReservationService {
                     integerList.add(1);
                 }else{
 
-                    if (ifIsReserved(roomModel,reservationHotel)){
+                    if (!ifIsReserved(roomModel,reservationHotel)){
                         integerList.add(1);
                     }
 

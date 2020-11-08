@@ -31,7 +31,7 @@ public class FlightModel {
   private AirportModel airportArrival;
   @OneToOne(mappedBy = "flightModel")
   private TripModel tripModel;
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "flight", orphanRemoval = false)
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "flight", orphanRemoval = true)
   @JsonIgnoreProperties("flight")
   private List<SeatModel> seats;
 

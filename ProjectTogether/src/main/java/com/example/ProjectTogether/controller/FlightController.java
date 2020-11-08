@@ -34,6 +34,10 @@ public class FlightController {
             flight.setId(flightModel.getId());
             flight.setName(flightModel.getName());
             flight.setVacancies(flightModel.getVacancies());
+            flight.setDepartureDay(flightModel.getDepartureDay());
+            flight.setReturnDay(flightModel.getReturnDay());
+            flight.setDepartureHour(flightModel.getDepartureHour());
+            flight.setArriveHour(flightModel.getArriveHour());
             AirportModel airportDep = new AirportModel();
             airportDep.setName(flightModel.getAirportDeparture().getName());
             CityModel cityModel1 = new CityModel();
