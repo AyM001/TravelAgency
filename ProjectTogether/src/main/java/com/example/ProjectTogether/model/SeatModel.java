@@ -11,6 +11,7 @@ public class SeatModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String seatName;
+    private int seatNumber;
     @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnoreProperties("seats")
     private FlightModel flight;
@@ -50,5 +51,13 @@ public class SeatModel {
 
     public void setReservation(ReservationFlight reservation) {
         this.reservation = reservation;
+    }
+
+    public int getSeatNumber() {
+        return seatNumber;
+    }
+
+    public void setSeatNumber(int seatNumber) {
+        this.seatNumber = seatNumber;
     }
 }
