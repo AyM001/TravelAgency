@@ -3,6 +3,7 @@ package com.example.ProjectTogether.controller;
 
 import com.example.ProjectTogether.model.*;
 import com.example.ProjectTogether.repository.FlightRepository;
+import com.example.ProjectTogether.repository.ReservationFlightRepository;
 import com.example.ProjectTogether.service.FlightService;
 import com.example.ProjectTogether.service.ReservationFlightService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class FlightController {
     private FlightService flightService;
     @Autowired
     private ReservationFlightService reservationFlightService;
+    @Autowired
+    private ReservationFlightRepository reservationFlightRepository;
 
     @PostMapping("/flights")
     public void addFlight(@RequestBody FlightModel flightModel){
@@ -122,5 +125,9 @@ public class FlightController {
     public List<SeatModel> seatModelsR(@PathVariable(name = "id") Long idFlight){
         return flightService.seatModelsRight(idFlight);
     }
-
+    @PostMapping("/flight/reserve/seat/")
+    public void reserveSeat(@RequestBody ReservationFlight reservationFlight){
+        System.out.println("test");
+        reservationFlightRepository.save(reservationFlight);
+    }
 }

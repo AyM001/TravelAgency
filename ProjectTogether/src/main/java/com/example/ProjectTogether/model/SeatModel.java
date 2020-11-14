@@ -19,8 +19,6 @@ public class SeatModel {
     @JsonIgnoreProperties("seat")
     private ReservationFlight reservation;
 
-
-
     public long getId() {
         return id;
     }
