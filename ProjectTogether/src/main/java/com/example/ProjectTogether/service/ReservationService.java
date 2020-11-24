@@ -1,13 +1,7 @@
 package com.example.ProjectTogether.service;
 
-import com.example.ProjectTogether.model.HotelModel;
-import com.example.ProjectTogether.model.ReservationHotel;
-import com.example.ProjectTogether.model.RoomModel;
-import com.example.ProjectTogether.model.RoomTypeModel;
-import com.example.ProjectTogether.repository.HotelRepository;
-import com.example.ProjectTogether.repository.ReservationHotelRepository;
-import com.example.ProjectTogether.repository.RoomRepository;
-import com.example.ProjectTogether.repository.RoomTypeRepository;
+import com.example.ProjectTogether.model.*;
+import com.example.ProjectTogether.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +10,7 @@ import java.util.ArrayList;
 import java.util.IllegalFormatCodePointException;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class ReservationService {
@@ -27,6 +22,8 @@ public class ReservationService {
     private ReservationHotelRepository reservationHotelRepository;
     @Autowired
     private RoomTypeRepository roomTypeRepository;
+    @Autowired
+    private VoucherHService voucherHService;
 
     private boolean ifIsReserved(RoomModel room, ReservationHotel rezNew){
         for (ReservationHotel rezOld: room.getReservations()){
@@ -57,7 +54,7 @@ public class ReservationService {
         return false;
     }
 
-    public void reserve(ReservationHotel reservation, long id){
+    public void reserve(ReservationHotel reservation, long id, VoucherH voucherH, String username) throws InterruptedException {
         Optional<HotelModel> hotelModelOptional = hotelRepository.findById(id);
         if (hotelModelOptional.isPresent()){
             HotelModel hotelModel = hotelModelOptional.get();
@@ -93,6 +90,8 @@ public class ReservationService {
                         reservation.setCheckOutTime(endTime);
                         reservation.setRoom(room);
                         reservationHotelRepository.save(reservation);
+                        TimeUnit.SECONDS.sleep(2);
+                        voucherHService.addReservationsH(voucherH,username);
                         break;
 
                     }
@@ -103,6 +102,8 @@ public class ReservationService {
                         reservation.setCheckOutTime(endTime);
                         reservation.setRoom(room);
                         reservationHotelRepository.save(reservation);
+                        TimeUnit.SECONDS.sleep(2);
+                        voucherHService.addReservationsH(voucherH,username);
                         break;
                     }
 

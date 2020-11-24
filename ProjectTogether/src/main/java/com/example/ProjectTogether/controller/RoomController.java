@@ -48,14 +48,14 @@ public class RoomController {
         return roomRepository.findById(id).orElse(null);
     }
 
-    @PostMapping("/reserve/{id}/{dateIn}/{dateOut}/{numPers}")
-    public void reserve(@PathVariable(name = "id") Long id, @PathVariable(name = "dateIn") String dateIn, @PathVariable(name = "dateOut") String dateOut,@PathVariable(name = "numPers") int numPers) {
-        ReservationHotel reservation = new ReservationHotel();
-        reservation.setCheckInDate(java.sql.Date.valueOf(dateIn));
-        reservation.setCheckOutDate(java.sql.Date.valueOf(dateOut));
-        reservation.setPersonsNumber(numPers);
-        reservationService.reserve(reservation,id);
-    }
+//    @PostMapping("/reserve/{id}/{dateIn}/{dateOut}/{numPers}")
+//    public void reserve(@PathVariable(name = "id") Long id, @PathVariable(name = "dateIn") String dateIn, @PathVariable(name = "dateOut") String dateOut,@PathVariable(name = "numPers") int numPers) {
+//        ReservationHotel reservation = new ReservationHotel();
+//        reservation.setCheckInDate(java.sql.Date.valueOf(dateIn));
+//        reservation.setCheckOutDate(java.sql.Date.valueOf(dateOut));
+//        reservation.setPersonsNumber(numPers);
+//        reservationService.reserve(reservation,id);
+//    }
 
     @GetMapping("reserve/{id}")
     public ReservationHotel getReservation(@PathVariable(name = "id") Long id){

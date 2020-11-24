@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import java.sql.Time;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,7 +17,7 @@ public class HotelModel {
   private String name;
   private int stars;
   private String description;
-  private String paket;
+  private double basicPrice;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JsonIgnoreProperties("hotelModelList")
@@ -68,13 +69,6 @@ public class HotelModel {
     return cityModel;
   }
 
-  public String getPaket() {
-    return paket;
-  }
-
-  public void setPaket(String paket) {
-    this.paket = paket;
-  }
 
   public void setCityModel(CityModel cityModel) {
     this.cityModel = cityModel;
@@ -95,4 +89,13 @@ public class HotelModel {
   public void setRooms(List<RoomModel> rooms) {
     this.rooms = rooms;
   }
+
+    public double getBasicPrice() {
+        return basicPrice;
+    }
+
+    public void setBasicPrice(double basicPrice) {
+        this.basicPrice = basicPrice;
+    }
+
 }

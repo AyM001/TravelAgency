@@ -19,6 +19,7 @@ public class FlightModel {
   private Date returnDay;
   private Time departureHour;
   private Time arriveHour;
+  private double seatPrice;
   private int rowsNumber;
   private int seatsRowNumber;
 
@@ -148,5 +149,13 @@ public class FlightModel {
 
   public void setSeatsRowNumber(int seatsRowNumber) {
     this.seatsRowNumber = seatsRowNumber;
+  }
+
+  public double getSeatPrice() {
+    return seatPrice;
+  }
+
+  public void setSeatPrice(double seatPrice) {
+    this.seatPrice = seatPrice;
   }
 }

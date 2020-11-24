@@ -41,7 +41,6 @@ public class HotelController {
       hotel.setId(hotelModel.getId());
       hotel.setName(hotelModel.getName());
       hotel.setDescription(hotel.getDescription());
-      hotel.setPaket(hotelModel.getPaket());
       CityModel cityModel = new CityModel();
       cityModel.setName(hotelModel.getCityModel().getName());
       hotel.setCityModel(cityModel);
@@ -62,7 +61,6 @@ public class HotelController {
       hotel.setId(hotelModel.getId());
       hotel.setName(hotelModel.getName());
       hotel.setDescription(hotel.getDescription());
-      hotel.setPaket(hotelModel.getPaket());
       CityModel cityModel = new CityModel();
       cityModel.setName(hotelModel.getCityModel().getName());
       hotel.setCityModel(cityModel);
@@ -88,7 +86,6 @@ public class HotelController {
     updatedHotel.setName(hotel.getName());
     updatedHotel.setStars(hotel.getStars());
     updatedHotel.setDescription(hotel.getDescription());
-    updatedHotel.setPaket(hotel.getPaket());
     hotelRepository.save(hotel);
   }
   @GetMapping("/hotels/photos/{id}")
@@ -125,6 +122,22 @@ public class HotelController {
       reservationHotel.setCheckOutDate(reservation.getCheckOutDate());
       reservationHotel.setCheckOutTime(reservation.getCheckOutTime());
       reservationHotels.add(reservationHotel);
+    }
+    return reservationHotels;
+  }
+
+  @GetMapping("/reservationall")
+  public List<ReservationHotel> getAllRes(){
+    List<ReservationHotel> reservationHotels = new ArrayList<>();
+    for (ReservationHotel reservationHotel: reservationHotelRepository.findAll()){
+      ReservationHotel reservation = new ReservationHotel();
+      reservation.setPersonsNumber(reservationHotel.getPersonsNumber());
+      reservation.setCheckInDate(reservationHotel.getCheckOutDate());
+      reservation.setCheckInDate(reservationHotel.getCheckInDate());
+      reservation.setCheckInTime(reservationHotel.getCheckInTime());
+      reservation.setCheckOutTime(reservationHotel.getCheckOutTime());
+      reservation.setId(reservationHotel.getId());
+      reservationHotels.add(reservation);
     }
     return reservationHotels;
   }

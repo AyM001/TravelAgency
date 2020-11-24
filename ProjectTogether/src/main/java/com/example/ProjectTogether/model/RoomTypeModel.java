@@ -14,6 +14,7 @@ public class RoomTypeModel {
     private String name;
     private String description;
     private int places;
+    private int procentPrice;
     private boolean hasbalcony;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "roomTypeModel", orphanRemoval = false)
@@ -66,5 +67,13 @@ public class RoomTypeModel {
 
     public void setHasbalcony(boolean hasbalcony) {
         this.hasbalcony = hasbalcony;
+    }
+
+    public int getProcentPrice() {
+        return procentPrice;
+    }
+
+    public void setProcentPrice(int procentPrice) {
+        this.procentPrice = procentPrice;
     }
 }
