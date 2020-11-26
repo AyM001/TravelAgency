@@ -45,6 +45,7 @@ public class FlightController {
             flight.setArriveHour(flightModel.getArriveHour());
             flight.setRowsNumber(flightModel.getRowsNumber());
             flight.setSeats(flightModel.getSeats());
+            flight.setSeatPrice(flightModel.getSeatPrice());
             AirportModel airportDep = new AirportModel();
             airportDep.setName(flightModel.getAirportDeparture().getName());
             CityModel cityModel1 = new CityModel();
@@ -78,6 +79,7 @@ public class FlightController {
             flight.setDepartureHour(flightModel.getDepartureHour());
             flight.setArriveHour(flightModel.getArriveHour());
             flight.setRowsNumber(flightModel.getRowsNumber());
+            flight.setSeatPrice(flightModel.getSeatPrice());
             flight.setSeatsRowNumber(flightModel.getSeatsRowNumber());
             AirportModel airportDep = new AirportModel();
             airportDep.setName(flightModel.getAirportDeparture().getName());

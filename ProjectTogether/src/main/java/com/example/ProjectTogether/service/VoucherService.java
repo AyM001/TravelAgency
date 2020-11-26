@@ -42,10 +42,10 @@ public class VoucherService {
         int vacancies = flightModel.getVacancies();
         int seatsNumber= flightModel.getSeatsRowNumber()*flightModel.getRowsNumber();
         double check =(double) seatsNumber/vacancies;
-        if (check <= 1.25   ){
+        if (check <= 1.20   ){
             totalPrice = totalPrice + totalPrice*0/100;
         }
-        if (check <= 1.66 && check > 1.25){
+        if (check <= 1.66 && check > 1.20){
             totalPrice = totalPrice + totalPrice*15/100;
         }
         if (check <= 2.5 && check > 1.66){
@@ -57,6 +57,8 @@ public class VoucherService {
       if ( check > 5){
           totalPrice = totalPrice + totalPrice*45/100;
       }
+      flightModel.setSeatPrice(totalPrice);
+      flightRepository.save(flightModel);
     return totalPrice;
   }
 
