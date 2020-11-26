@@ -99,4 +99,12 @@ public List<SeatModel> seatModelsRight(long id){
     }
     return seatModelsRight;
 }
+    public void setVacancies(long id, int vacancies){
+        Optional<FlightModel> flightModelOptional = flightRepository.findById(id);
+        if (flightModelOptional.isPresent()){
+            FlightModel  flightModel  = flightModelOptional.get();
+            flightModel.setVacancies(flightModel.getVacancies()-vacancies);
+            flightRepository.save(flightModel);
+        }
+    }
 }

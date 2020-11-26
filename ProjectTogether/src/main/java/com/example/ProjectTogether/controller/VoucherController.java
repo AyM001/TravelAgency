@@ -11,19 +11,16 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @CrossOrigin
 public class VoucherController {
     @Autowired
     private VoucherRepository voucherRepository;
     @Autowired
     private VoucherService voucherService;
-    @PostMapping("/voucher")
-    public void save(@RequestBody VoucherModel voucherModel){
-        voucherService.save(voucherModel);
+    @PostMapping("/voucher/{id}")
+    public void save(@RequestBody ReservationFlight reservationFlight, @PathVariable(name = "id") Long id) throws InterruptedException {
+        voucherService.addReservationsF(reservationFlight,id);
     }
-    @PutMapping("/voucher{id}")
-    public void addRes(@RequestBody  List<ReservationFlight> reservationFlights,@PathVariable (name = "id") Long id){
-        voucherService.addReservationsF(reservationFlights, id);
-    }
+
 }

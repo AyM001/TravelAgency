@@ -40,8 +40,6 @@ public class FlightModel {
     return tripModel;
   }
 
-  public FlightModel() {
-  }
 
   public void setTripModel(TripModel tripModel) {
     this.tripModel = tripModel;

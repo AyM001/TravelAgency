@@ -130,4 +130,8 @@ public class FlightController {
         System.out.println("test");
         reservationFlightRepository.save(reservationFlight);
     }
+    @PutMapping("/flights/vacancies/{id}/{vacancies}")
+    public void updateVacancies(@PathVariable(name = "id") Long idFlight, @PathVariable(name = "vacancies") int vacancies){
+        flightService.setVacancies(idFlight,vacancies);
+    }
 }

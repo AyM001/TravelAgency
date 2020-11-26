@@ -1,5 +1,7 @@
 package com.example.ProjectTogether.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +13,9 @@ public class VoucherModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String username;
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<ReservationFlight> reservationFlights = new ArrayList<>();
-    private int numberOfTicketsFlight;
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("voucher")
+    private ReservationFlight reservationFlight;
 
     private double totalPrice;
 
@@ -25,21 +27,14 @@ public class VoucherModel {
         this.id = id;
     }
 
-    public List<ReservationFlight> getReservationFlights() {
-        return reservationFlights;
+    public ReservationFlight getReservationFlight() {
+        return reservationFlight;
     }
 
-    public void setReservationFlights(List<ReservationFlight> reservationFlights) {
-        this.reservationFlights = reservationFlights;
+    public void setReservationFlight(ReservationFlight reservationFlight) {
+        this.reservationFlight = reservationFlight;
     }
 
-    public int getNumberOfTicketsFlight() {
-        return numberOfTicketsFlight;
-    }
-
-    public void setNumberOfTicketsFlight(int numberOfTicketsFlight) {
-        this.numberOfTicketsFlight = numberOfTicketsFlight;
-    }
 
 
     public double getTotalPrice() {
