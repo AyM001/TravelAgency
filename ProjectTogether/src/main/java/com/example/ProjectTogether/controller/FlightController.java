@@ -2,6 +2,8 @@ package com.example.ProjectTogether.controller;
 
 
 import com.example.ProjectTogether.model.*;
+import com.example.ProjectTogether.persistance.dto.model.*;
+import com.example.ProjectTogether.persistance.model.*;
 import com.example.ProjectTogether.repository.FlightRepository;
 import com.example.ProjectTogether.repository.ReservationFlightRepository;
 import com.example.ProjectTogether.service.FlightService;
@@ -9,7 +11,6 @@ import com.example.ProjectTogether.service.ReservationFlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -97,7 +98,7 @@ public class FlightController {
         return flight;
     }
     @PutMapping("/flights/{id}/{numPers}")  //numPers persoanele care vor sa rezerve bilete la zborul respectiv
-    public void saveReservation(@RequestBody ReservationFlight reservation,@PathVariable(name = "id") Long idFlight,@PathVariable(name = "numPers") int numPers){
+    public void saveReservation(@RequestBody ReservationFlight reservation, @PathVariable(name = "id") Long idFlight, @PathVariable(name = "numPers") int numPers){
         reservationFlightService.saveReservation(reservation,idFlight,numPers);
     }
 

@@ -1,4 +1,4 @@
-package com.example.ProjectTogether.model;
+package com.example.ProjectTogether.persistance.model;
 
 
 import com.example.ProjectTogether.common.utils.Hasher;

@@ -1,9 +1,10 @@
 package com.example.ProjectTogether.service;
 
 import com.example.ProjectTogether.model.*;
+import com.example.ProjectTogether.persistance.dto.model.*;
+import com.example.ProjectTogether.persistance.model.*;
 import com.example.ProjectTogether.repository.ReservationHotelRepository;
 import com.example.ProjectTogether.repository.RoomRepository;
-import com.example.ProjectTogether.repository.RoomTypeRepository;
 import com.example.ProjectTogether.repository.VoucherHRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,9 +1,8 @@
 package com.example.ProjectTogether.controller;
 
-import com.example.ProjectTogether.model.ReservationHotel;
-import com.example.ProjectTogether.model.VoucherH;
-import com.example.ProjectTogether.model.files.ResponseMessage;
-import com.example.ProjectTogether.repository.ReservationHotelRepository;
+import com.example.ProjectTogether.persistance.model.ReservationHotel;
+import com.example.ProjectTogether.persistance.model.VoucherH;
+import com.example.ProjectTogether.persistance.model.files.ResponseMessage;
 import com.example.ProjectTogether.repository.VoucherHRepository;
 import com.example.ProjectTogether.service.ReservationService;
 import com.example.ProjectTogether.service.VoucherHService;

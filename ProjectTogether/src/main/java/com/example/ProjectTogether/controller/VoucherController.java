@@ -1,15 +1,10 @@
 package com.example.ProjectTogether.controller;
 
-import com.example.ProjectTogether.model.ReservationFlight;
-import com.example.ProjectTogether.model.VoucherModel;
+import com.example.ProjectTogether.persistance.model.ReservationFlight;
 import com.example.ProjectTogether.repository.VoucherRepository;
 import com.example.ProjectTogether.service.VoucherService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin

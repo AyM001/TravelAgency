@@ -1,11 +1,10 @@
 package com.example.ProjectTogether.controller;
 
 
-import com.example.ProjectTogether.model.CityModel;
-import com.example.ProjectTogether.model.CountryModel;
-import com.example.ProjectTogether.model.HotelModel;
-import com.example.ProjectTogether.model.ReservationHotel;
-import com.example.ProjectTogether.model.files.ResponseFile;
+import com.example.ProjectTogether.persistance.model.CityModel;
+import com.example.ProjectTogether.persistance.model.HotelModel;
+import com.example.ProjectTogether.persistance.model.ReservationHotel;
+import com.example.ProjectTogether.persistance.model.files.ResponseFile;
 import com.example.ProjectTogether.repository.HotelRepository;
 import com.example.ProjectTogether.repository.ReservationHotelRepository;
 import com.example.ProjectTogether.service.PhotoHotelStorageService;

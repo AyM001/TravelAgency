@@ -1,6 +1,6 @@
 package com.example.ProjectTogether.controller;
 
-import com.example.ProjectTogether.model.RoomTypeModel;
+import com.example.ProjectTogether.persistance.model.RoomTypeModel;
 import com.example.ProjectTogether.repository.RoomTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

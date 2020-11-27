@@ -1,4 +1,4 @@
-package com.example.ProjectTogether.model.files;
+package com.example.ProjectTogether.persistance.model.files;
 
 public class ResponseFile {
     private String name;

@@ -1,8 +1,8 @@
 package com.example.ProjectTogether.service;
 
-import com.example.ProjectTogether.model.FlightModel;
-import com.example.ProjectTogether.model.ReservationFlight;
-import com.example.ProjectTogether.model.SeatModel;
+import com.example.ProjectTogether.persistance.model.FlightModel;
+import com.example.ProjectTogether.persistance.model.ReservationFlight;
+import com.example.ProjectTogether.persistance.model.SeatModel;
 import com.example.ProjectTogether.repository.FlightRepository;
 import com.example.ProjectTogether.repository.SeatRepository;
 import org.springframework.beans.factory.annotation.Autowired;

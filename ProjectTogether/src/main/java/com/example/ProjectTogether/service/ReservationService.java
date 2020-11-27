@@ -1,13 +1,14 @@
 package com.example.ProjectTogether.service;
 
 import com.example.ProjectTogether.model.*;
+import com.example.ProjectTogether.persistance.dto.model.*;
+import com.example.ProjectTogether.persistance.model.*;
 import com.example.ProjectTogether.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Time;
 import java.util.ArrayList;
-import java.util.IllegalFormatCodePointException;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;

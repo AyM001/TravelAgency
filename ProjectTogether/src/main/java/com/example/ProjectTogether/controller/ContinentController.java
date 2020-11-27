@@ -1,6 +1,6 @@
 package com.example.ProjectTogether.controller;
 
-import com.example.ProjectTogether.model.ContinentModel;
+import com.example.ProjectTogether.persistance.model.ContinentModel;
 import com.example.ProjectTogether.repository.ContinentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
