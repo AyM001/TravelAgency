@@ -1,7 +1,5 @@
 package com.example.ProjectTogether.service;
 
-import com.example.ProjectTogether.model.*;
-import com.example.ProjectTogether.persistance.dto.model.*;
 import com.example.ProjectTogether.persistance.model.*;
 import com.example.ProjectTogether.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;

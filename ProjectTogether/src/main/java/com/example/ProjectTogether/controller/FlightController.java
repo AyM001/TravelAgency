@@ -1,8 +1,6 @@
 package com.example.ProjectTogether.controller;
 
-
-import com.example.ProjectTogether.model.*;
-import com.example.ProjectTogether.persistance.dto.model.*;
+import com.example.ProjectTogether.persistance.dto.ReservationfDto;
 import com.example.ProjectTogether.persistance.model.*;
 import com.example.ProjectTogether.repository.FlightRepository;
 import com.example.ProjectTogether.repository.ReservationFlightRepository;
@@ -98,7 +96,7 @@ public class FlightController {
         return flight;
     }
     @PutMapping("/flights/{id}/{numPers}")  //numPers persoanele care vor sa rezerve bilete la zborul respectiv
-    public void saveReservation(@RequestBody ReservationFlight reservation, @PathVariable(name = "id") Long idFlight, @PathVariable(name = "numPers") int numPers){
+    public void saveReservation(@RequestBody ReservationfDto reservation, @PathVariable(name = "id") Long idFlight, @PathVariable(name = "numPers") int numPers){
         reservationFlightService.saveReservation(reservation,idFlight,numPers);
     }
 
