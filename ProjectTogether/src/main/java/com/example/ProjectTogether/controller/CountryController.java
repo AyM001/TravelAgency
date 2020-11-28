@@ -1,6 +1,6 @@
 package com.example.ProjectTogether.controller;
 
-import com.example.ProjectTogether.model.CountryModel;
+import com.example.ProjectTogether.persistance.model.CountryModel;
 import com.example.ProjectTogether.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

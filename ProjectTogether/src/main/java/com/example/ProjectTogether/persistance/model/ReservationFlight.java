@@ -1,8 +1,9 @@
-package com.example.ProjectTogether.model;
+package com.example.ProjectTogether.persistance.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "reservationf")
@@ -14,6 +15,10 @@ public class ReservationFlight {
     private String firstName;
     private String lastName;
     private String documentId;
+    @Enumerated(EnumType.STRING)
+    @JsonIgnoreProperties("reservationf")
+    @ElementCollection(targetClass = Luggage.class)
+    private List<Luggage> luggage;
     @OneToOne( fetch = FetchType.LAZY)
     @JsonIgnoreProperties("reservation")
     private SeatModel seat;
@@ -64,5 +69,13 @@ public class ReservationFlight {
 
     public void setDocumentId(String documentId) {
         this.documentId = documentId;
+    }
+
+    public List<Luggage> getLuggage() {
+        return luggage;
+    }
+
+    public void setLuggage(List<Luggage> luggage) {
+        this.luggage = luggage;
     }
 }

@@ -1,6 +1,6 @@
 package com.example.ProjectTogether.controller;
 
-import com.example.ProjectTogether.model.ParticipantModel;
+import com.example.ProjectTogether.persistance.model.ParticipantModel;
 import com.example.ProjectTogether.repository.ParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,7 @@
 package com.example.ProjectTogether.controller;
 
-
-import com.example.ProjectTogether.model.*;
+import com.example.ProjectTogether.persistance.dto.ReservationfDto;
+import com.example.ProjectTogether.persistance.model.*;
 import com.example.ProjectTogether.repository.FlightRepository;
 import com.example.ProjectTogether.repository.ReservationFlightRepository;
 import com.example.ProjectTogether.service.FlightService;
@@ -9,7 +9,6 @@ import com.example.ProjectTogether.service.ReservationFlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -45,6 +44,7 @@ public class FlightController {
             flight.setArriveHour(flightModel.getArriveHour());
             flight.setRowsNumber(flightModel.getRowsNumber());
             flight.setSeats(flightModel.getSeats());
+            flight.setSeatPrice(flightModel.getSeatPrice());
             AirportModel airportDep = new AirportModel();
             airportDep.setName(flightModel.getAirportDeparture().getName());
             CityModel cityModel1 = new CityModel();
@@ -78,6 +78,7 @@ public class FlightController {
             flight.setDepartureHour(flightModel.getDepartureHour());
             flight.setArriveHour(flightModel.getArriveHour());
             flight.setRowsNumber(flightModel.getRowsNumber());
+            flight.setSeatPrice(flightModel.getSeatPrice());
             flight.setSeatsRowNumber(flightModel.getSeatsRowNumber());
             AirportModel airportDep = new AirportModel();
             airportDep.setName(flightModel.getAirportDeparture().getName());
@@ -95,7 +96,7 @@ public class FlightController {
         return flight;
     }
     @PutMapping("/flights/{id}/{numPers}")  //numPers persoanele care vor sa rezerve bilete la zborul respectiv
-    public void saveReservation(@RequestBody ReservationFlight reservation,@PathVariable(name = "id") Long idFlight,@PathVariable(name = "numPers") int numPers){
+    public void saveReservation(@RequestBody ReservationfDto reservation, @PathVariable(name = "id") Long idFlight, @PathVariable(name = "numPers") int numPers){
         reservationFlightService.saveReservation(reservation,idFlight,numPers);
     }
 
@@ -129,5 +130,9 @@ public class FlightController {
     public void reserveSeat(@RequestBody ReservationFlight reservationFlight){
         System.out.println("test");
         reservationFlightRepository.save(reservationFlight);
+    }
+    @PutMapping("/flights/vacancies/{id}/{vacancies}")
+    public void updateVacancies(@PathVariable(name = "id") Long idFlight, @PathVariable(name = "vacancies") int vacancies){
+        flightService.setVacancies(idFlight,vacancies);
     }
 }

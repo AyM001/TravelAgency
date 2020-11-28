@@ -1,9 +1,8 @@
 package com.example.ProjectTogether.controller;
 
 
-import com.example.ProjectTogether.model.CityModel;
-import com.example.ProjectTogether.model.CountryModel;
-import com.example.ProjectTogether.model.ParticipantModel;
+import com.example.ProjectTogether.persistance.model.CityModel;
+import com.example.ProjectTogether.persistance.model.CountryModel;
 import com.example.ProjectTogether.repository.CityRepository;
 import com.example.ProjectTogether.repository.HotelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
