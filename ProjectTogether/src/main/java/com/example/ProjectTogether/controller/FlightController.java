@@ -1,5 +1,6 @@
 package com.example.ProjectTogether.controller;
 
+import com.example.ProjectTogether.persistance.dto.FlightDto;
 import com.example.ProjectTogether.persistance.dto.ReservationfDto;
 import com.example.ProjectTogether.persistance.model.*;
 import com.example.ProjectTogether.repository.FlightRepository;
@@ -26,74 +27,18 @@ public class FlightController {
     private ReservationFlightRepository reservationFlightRepository;
 
     @PostMapping("/flights")
-    public void addFlight(@RequestBody FlightModel flightModel){
-        flightService.createFlight(flightModel);
+    public void addFlight(@RequestBody FlightDto flightDto){
+        flightService.createFlight(flightDto);
     }
 
     @GetMapping("/flights")
-    public List<FlightModel> getFlights(){
-        List<FlightModel> flightModels = new ArrayList<>();
-        for (FlightModel flightModel: flightRepository.findAll() ){
-            FlightModel flight = new FlightModel();
-            flight.setId(flightModel.getId());
-            flight.setName(flightModel.getName());
-            flight.setVacancies(flightModel.getVacancies());
-            flight.setDepartureDay(flightModel.getDepartureDay());
-            flight.setReturnDay(flightModel.getReturnDay());
-            flight.setDepartureHour(flightModel.getDepartureHour());
-            flight.setArriveHour(flightModel.getArriveHour());
-            flight.setRowsNumber(flightModel.getRowsNumber());
-            flight.setSeats(flightModel.getSeats());
-            flight.setSeatPrice(flightModel.getSeatPrice());
-            AirportModel airportDep = new AirportModel();
-            airportDep.setName(flightModel.getAirportDeparture().getName());
-            CityModel cityModel1 = new CityModel();
-            cityModel1.setName(flightModel.getAirportDeparture().getCityModel().getName());
-            airportDep.setCityModel(cityModel1);
-            AirportModel airportArr = new AirportModel();
-            CityModel cityModel2 = new CityModel();
-            cityModel2.setName(flightModel.getAirportArrival().getCityModel().getName());
-            airportArr.setName(flightModel.getAirportArrival().getName());
-            airportArr.setCityModel(cityModel2);
-            flight.setAirportDeparture(airportDep);
-            flight.setAirportArrival(airportArr);
-            flightModels.add(flight);
-        }
-
-        return flightModels;
+    public List<FlightDto> getFlights(){
+       return flightService.getAll();
     }
 
     @GetMapping("/flights/{id}")
-    public FlightModel getById(@PathVariable(name = "id") Long idFlight) {
-        Optional<FlightModel> flightModelOptional = flightRepository.findById(idFlight);
-        FlightModel flight = new FlightModel();
-        if (flightModelOptional.isPresent()){
-            FlightModel  flightModel = flightModelOptional.get();
-            flight.setId(flightModel.getId());
-            flight.setName(flightModel.getName());
-            flight.setVacancies(flightModel.getVacancies());
-            flight.setDepartureDay(flightModel.getDepartureDay());
-            flight.setReturnDay(flightModel.getReturnDay());
-            flight.setSeats(flightModel.getSeats());
-            flight.setDepartureHour(flightModel.getDepartureHour());
-            flight.setArriveHour(flightModel.getArriveHour());
-            flight.setRowsNumber(flightModel.getRowsNumber());
-            flight.setSeatPrice(flightModel.getSeatPrice());
-            flight.setSeatsRowNumber(flightModel.getSeatsRowNumber());
-            AirportModel airportDep = new AirportModel();
-            airportDep.setName(flightModel.getAirportDeparture().getName());
-            CityModel cityModel1 = new CityModel();
-            cityModel1.setName(flightModel.getAirportDeparture().getCityModel().getName());
-            airportDep.setCityModel(cityModel1);
-            AirportModel airportArr = new AirportModel();
-            CityModel cityModel2 = new CityModel();
-            cityModel2.setName(flightModel.getAirportArrival().getCityModel().getName());
-            airportArr.setName(flightModel.getAirportArrival().getName());
-            airportArr.setCityModel(cityModel2);
-            flight.setAirportDeparture(airportDep);
-            flight.setAirportArrival(airportArr);
-        }
-        return flight;
+    public FlightDto getById(@PathVariable(name = "id") Long idFlight) {
+        return flightService.getOne(idFlight);
     }
     @PutMapping("/flights/{id}/{numPers}")  //numPers persoanele care vor sa rezerve bilete la zborul respectiv
     public void saveReservation(@RequestBody ReservationfDto reservation, @PathVariable(name = "id") Long idFlight, @PathVariable(name = "numPers") int numPers){
