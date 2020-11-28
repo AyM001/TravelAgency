@@ -29,11 +29,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/register").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**")
-                .permitAll()
-                .anyRequest()// disable
-                .authenticated()
-                .and()
-                .httpBasic();
+                .permitAll();
+               // .anyRequest()// disable
+               // .authenticated()
+               // .and()
+               //.httpBasic();
     }
 
 }

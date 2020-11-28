@@ -11,18 +11,16 @@ public class ParticipantModel {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
-  private String firstName;
-  private String lastName;
-  private int age;
+  private String fullname;
   private String email;
-  private String phoneNumber;
-  private String Address;
-  @ManyToMany(fetch = FetchType.LAZY, mappedBy = "participantModels")
-  @JsonIgnoreProperties("participantModels")
-  private List<TripModel> tripModels;
-  public ParticipantModel() {
+  private String address;
+  private String mobile;
+  private String city;
+  private String state;
+  private int zipcode;
+  private String cardOwnerName ;
+  private String cardNumber ;
 
-  }
 
   public Long getId() {
     return id;
@@ -32,28 +30,52 @@ public class ParticipantModel {
     this.id = id;
   }
 
-  public String getFirstName() {
-    return firstName;
+  public String getFullname() {
+    return fullname;
   }
 
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
+  public void setFullname(String fullname) {
+    this.fullname = fullname;
   }
 
-  public String getLastName() {
-    return lastName;
+  public String getCity() {
+    return city;
   }
 
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
+  public void setCity(String city) {
+    this.city = city;
   }
 
-  public int getAge() {
-    return age;
+  public String getState() {
+    return state;
   }
 
-  public void setAge(int age) {
-    this.age = age;
+  public void setState(String state) {
+    this.state = state;
+  }
+
+  public int getZipcode() {
+    return zipcode;
+  }
+
+  public void setZipcode(int zipcode) {
+    this.zipcode = zipcode;
+  }
+
+  public String getCardOwnerName() {
+    return cardOwnerName;
+  }
+
+  public void setCardOwnerName(String cardOwnerName) {
+    this.cardOwnerName = cardOwnerName;
+  }
+
+  public String getCardNumber() {
+    return cardNumber;
+  }
+
+  public void setCardNumber(String cardNumber) {
+    this.cardNumber = cardNumber;
   }
 
   public String getEmail() {
@@ -64,27 +86,20 @@ public class ParticipantModel {
     this.email = email;
   }
 
-  public String getPhoneNumber() {
-    return phoneNumber;
+  public String getMobile() {
+    return mobile;
   }
 
-  public void setPhoneNumber(String phoneNumber) {
-    this.phoneNumber = phoneNumber;
+  public void setMobile(String phoneNumber) {
+    this.mobile = phoneNumber;
   }
 
   public String getAddress() {
-    return Address;
+    return address;
   }
 
   public void setAddress(String address) {
-    Address = address;
+    this.address = address;
   }
 
-  public List<TripModel> getTripModels() {
-    return tripModels;
-  }
-
-  public void setTripModels(List<TripModel> tripModels) {
-    this.tripModels = tripModels;
-  }
 }
