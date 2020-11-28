@@ -3,6 +3,7 @@ package com.example.ProjectTogether.persistance.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "country")
@@ -17,9 +18,9 @@ public class CountryModel {
   @JsonIgnoreProperties("countryModelList")
   private ContinentModel continentModel;
 
-//  @OneToMany(fetch = FetchType.LAZY, mappedBy = "countryModel", orphanRemoval = false)
-//  @JsonIgnoreProperties("countryModel")
-//  private List<CityModel> cityModelList;
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "countryModel", orphanRemoval = false)
+  @JsonIgnoreProperties("countryModel")
+  private List<CityModel> cityModelList;
 
 
 
@@ -48,11 +49,11 @@ public class CountryModel {
     this.continentModel = continentModel;
   }
 
-//  public List<CityModel> getCityModelList() {
-//    return cityModelList;
-//  }
-//
-//  public void setCityModelList(List<CityModel> cityModelList) {
-//    this.cityModelList = cityModelList;
-//  }
+  public List<CityModel> getCityModelList() {
+    return cityModelList;
+  }
+
+  public void setCityModelList(List<CityModel> cityModelList) {
+    this.cityModelList = cityModelList;
+  }
 }

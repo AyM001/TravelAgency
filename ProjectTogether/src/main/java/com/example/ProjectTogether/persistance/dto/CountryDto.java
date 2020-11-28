@@ -1,11 +1,14 @@
 package com.example.ProjectTogether.persistance.dto;
 
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class CountryDto {
     private Long id;
     private String name;
     private ContinentDto continentModel;
+    private List<CityDto> cityModelList = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -29,5 +32,13 @@ public class CountryDto {
 
     public void setContinentModel(ContinentDto continent) {
         continentModel = continent;
+    }
+
+    public List<CityDto> getCityModelList() {
+        return cityModelList;
+    }
+
+    public void setCityModelList(List<CityDto> cityModelList) {
+        this.cityModelList = cityModelList;
     }
 }

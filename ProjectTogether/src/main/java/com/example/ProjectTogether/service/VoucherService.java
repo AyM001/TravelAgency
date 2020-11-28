@@ -54,6 +54,7 @@ public class VoucherService {
 
   private double totalPrice(FlightModel flightModel, ReservationFlight reservationFlight){
         double totalPrice = flightModel.getSeatPrice();
+      System.out.println(totalPrice);
         int vacancies = flightModel.getVacancies();
         int seatsNumber= flightModel.getSeatsRowNumber()*flightModel.getRowsNumber();
         double check =(double) seatsNumber/vacancies;
@@ -61,18 +62,18 @@ public class VoucherService {
             totalPrice = totalPrice + totalPrice*0/100;
         }
         if (check <= 1.66 && check > 1.20){
-            totalPrice = totalPrice + totalPrice*15/100;
+            totalPrice = totalPrice + totalPrice*2/100;
         }
         if (check <= 2.5 && check > 1.66){
-            totalPrice = totalPrice + totalPrice*25/100;
+            totalPrice = totalPrice + totalPrice*3/100;
         }
        if (check <= 5 && check > 2.5){
-          totalPrice = totalPrice + totalPrice*35/100;
+          totalPrice = totalPrice + totalPrice*4/100;
       }
       if ( check > 5){
-          totalPrice = totalPrice + totalPrice*45/100;
+          totalPrice = totalPrice + totalPrice*5/100;
       }
-      flightModel.setSeatPrice(totalPrice);
+      flightModel.setSeatPrice(Math.round(totalPrice));
       flightRepository.save(flightModel);
       List<String> luggages = new ArrayList<>();
       for (Luggage luggage: reservationFlight.getLuggage()){
@@ -89,7 +90,7 @@ public class VoucherService {
               totalPrice = totalPrice + 30;
           }
       }
-    return totalPrice;
+    return (Math.round(totalPrice));
   }
 
 

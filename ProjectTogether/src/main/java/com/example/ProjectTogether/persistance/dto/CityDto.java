@@ -1,12 +1,13 @@
 package com.example.ProjectTogether.persistance.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CityDto {
     private Long id;
     private String name;
     private CountryDto countryModel;
-    private List<HotelDto> hotelModelList;
+    private List<HotelDto> hotelModelList = new ArrayList<>();
     private AirportDto airportModel;
 
     public Long getId() {
