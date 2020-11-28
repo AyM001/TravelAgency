@@ -14,12 +14,9 @@ public class TripModel {
 
     private Date departureDate;
     private Date returnDate;
-
     private int numberOfDays;
-
     private double priceForAdults;
     private double priceForChildren;
-
     private boolean promoted;
 
     @ManyToMany(fetch = FetchType.LAZY)

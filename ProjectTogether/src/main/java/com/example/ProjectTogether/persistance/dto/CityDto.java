@@ -31,7 +31,7 @@ public class CityDto {
     }
 
     public void setCountryModel(CountryDto country) {
-        countryModel = countryModel;
+        countryModel = country;
     }
 
     public List<HotelDto> getHotelModelList() {
