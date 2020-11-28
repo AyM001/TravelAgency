@@ -30,20 +30,14 @@ public class FlightModel {
   @ManyToOne(fetch = FetchType.EAGER)
   @JsonIgnoreProperties("flightArrival")
   private AirportModel airportArrival;
-  @OneToOne(mappedBy = "flightModel")
-  private TripModel tripModel;
+
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "flight", orphanRemoval = true)
   @JsonIgnoreProperties("flight")
   private List<SeatModel> seats;
 
-  public TripModel getTripModel() {
-    return tripModel;
-  }
 
 
-  public void setTripModel(TripModel tripModel) {
-    this.tripModel = tripModel;
-  }
+
 
   public Long getId() {
     return id;

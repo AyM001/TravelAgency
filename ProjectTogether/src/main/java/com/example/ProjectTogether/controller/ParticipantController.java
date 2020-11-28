@@ -34,11 +34,15 @@ public class ParticipantController {
     @PutMapping("/participants")
     public void updateParticipant(@RequestBody ParticipantModel participantModel) {
         ParticipantModel participantModelToBeUpdated = participantRepository.findById(participantModel.getId()).orElse(null);
-        participantModelToBeUpdated.setFirstName(participantModel.getFirstName());
-        participantModelToBeUpdated.setLastName(participantModel.getLastName());
+        participantModelToBeUpdated.setFullname(participantModel.getFullname());
+        participantModelToBeUpdated.setMobile(participantModel.getMobile());
         participantModelToBeUpdated.setEmail(participantModel.getEmail());
-        participantModelToBeUpdated.setAge(participantModel.getAge());
+        participantModelToBeUpdated.setCity(participantModel.getCity());
         participantModelToBeUpdated.setAddress(participantModel.getAddress());
+        participantModelToBeUpdated.setCardNumber(participantModel.getCardNumber());
+        participantModelToBeUpdated.setCardOwnerName(participantModel.getCardOwnerName());
+        participantModelToBeUpdated.setState(participantModel.getState());
+        participantModelToBeUpdated.setZipcode(participantModel.getZipcode());
         participantRepository.save(participantModelToBeUpdated);
     }
 
